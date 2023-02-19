@@ -1,3 +1,5 @@
+import { Config } from '../../support/config';
+
 describe('Login', () => {
   it('Login_Success_CorrectUsernameAndPassword', () => {
     // clear database
@@ -15,7 +17,7 @@ describe('Login', () => {
 
     cy.request({
       method: 'POST',
-      url: 'http://127.0.0.1:4000/auth/login',
+      url: `${Config.BASE_API_URL}/auth/login`,
       failOnStatusCode: false,
       body: {
         username: 'admin',
