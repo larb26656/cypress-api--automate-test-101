@@ -2,12 +2,28 @@ import neatCsv = require('neat-csv');
 import { Config } from '../../support/config';
 
 describe('Login', () => {
-  it('Login_Success_CorrectUsernameAndPassword', () => {
+  before(() => {
+    cy.log('before func invoked');
+  });
+
+  beforeEach(() => {
+    cy.log('before each func invoked');
+
     // clear database
     cy.dbClear().then(res => {
       expect(res.status).equal(200);
     });
+  });
 
+  afterEach(() => {
+    cy.log('after each func invoked');
+  });
+
+  after(() => {
+    cy.log('after func invoked');
+  });
+
+  it('Login_Success_CorrectUsernameAndPassword', () => {
     //excute database
     cy.readFile('cypress/fixtures/auth/login/success-case-init-data.sql').as('initScript');
 
@@ -37,11 +53,6 @@ describe('Login', () => {
   });
 
   it('Login_Fail_InvalidParameterOrInvalidUsernameOrPassword', () => {
-    // clear database
-    cy.dbClear().then(res => {
-      expect(res.status).equal(200);
-    });
-
     cy.readFile('cypress/fixtures/auth/login/fail-case-data.csv')
       .then(neatCsv)
       .each((row: any) => {
