@@ -1,0 +1,9 @@
+reqBody,expectStatus,description
+{},400,
+"{
+  ""name"": ""test""
+}",400,
+"{
+  ""name"": ""test"",
+  ""email"": ""test""
+}",400,Wrong email format

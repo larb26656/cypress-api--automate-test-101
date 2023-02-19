@@ -1,0 +1,5 @@
+reqBody,expectStatus,description
+"{
+    ""name"": ""test"",
+    ""email"": ""admin@test.com""
+}",200,

@@ -10,9 +10,7 @@ describe('Login', () => {
     cy.log('before each func invoked');
 
     // clear database
-    cy.dbClear().then(res => {
-      expect(res.status).equal(200);
-    });
+    cy.dbClear();
   });
 
   afterEach(() => {
@@ -28,9 +26,7 @@ describe('Login', () => {
     cy.readFile('cypress/fixtures/auth/login/success-case-init-data.sql').as('initScript');
 
     cy.get('@initScript').then((script: any) => {
-      cy.dbExecute(script as string).then(res => {
-        expect(res.status).equal(200);
-      });
+      cy.dbExecute(script as string);
     });
 
     cy.readFile('cypress/fixtures/auth/login/success-case-data.csv')
