@@ -1,0 +1,13 @@
+id,reqBody,expectStatus,resCode,description
+1,{},400,,
+1,"{
+  ""name"": ""test""
+}",400,,
+1,"{
+  ""name"": ""test"",
+  ""email"": ""test""
+}",400,,Wrong email format
+2,"{
+  ""name"": ""test"",
+  ""email"": ""test@admin.com""
+}",400,CUSTOMER_01,Customer not found

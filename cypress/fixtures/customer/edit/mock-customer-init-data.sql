@@ -1,0 +1,1 @@
+INSERT INTO customer (name,email,deleted) VALUES('test','admin@test.com',0);

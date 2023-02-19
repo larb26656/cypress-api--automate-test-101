@@ -17,7 +17,7 @@ describe('Create customer', () => {
     cy.sessionLogin('admin', '1234').as('token');
 
     cy.get('@token').then(token => {
-      cy.readFile('cypress/fixtures/customer/create/success-case-data.csv')
+      cy.readFile('cypress/fixtures/customer/edit/success-case-data.csv')
         .then(neatCsv)
         .each((row: any) => {
           const data = row;

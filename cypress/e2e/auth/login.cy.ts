@@ -23,7 +23,7 @@ describe('Login', () => {
 
   it('Login_Success_CorrectUsernameAndPassword', () => {
     //excute database
-    cy.readFile('cypress/fixtures/auth/login/success-case-init-data.sql').as('initScript');
+    cy.readFile('cypress/fixtures/auth/mock-user-init-data.sql').as('initScript');
 
     cy.get('@initScript').then((script: any) => {
       cy.dbExecute(script as string);
