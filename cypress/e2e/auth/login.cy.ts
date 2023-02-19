@@ -1,3 +1,4 @@
+import neatCsv = require('neat-csv');
 import { Config } from '../../support/config';
 
 describe('Login', () => {
@@ -8,23 +9,31 @@ describe('Login', () => {
     });
 
     //excute database
-    const initUserScript =
-      "INSERT INTO `user` (name,username,`password`, active, deleted) VALUES('user1', 'admin', '81dc9bdb52d04dc20036dbd8313ed055',1,0);";
+    cy.readFile('cypress/fixtures/auth/login/success-case-init-data.sql').as('initScript');
 
-    cy.dbExecute(initUserScript).then(res => {
-      expect(res.status).equal(200);
+    cy.get('@initScript').then((script: any) => {
+      cy.dbExecute(script as string).then(res => {
+        expect(res.status).equal(200);
+      });
     });
 
-    cy.request({
-      method: 'POST',
-      url: `${Config.BASE_API_URL}/auth/login`,
-      failOnStatusCode: false,
-      body: {
-        username: 'admin',
-        password: '1234',
-      },
-    }).then(res => {
-      expect(res.status).equal(200);
-    });
+    cy.readFile('cypress/fixtures/auth/login/success-case-data.csv')
+      .then(neatCsv)
+      // .then(console.table)
+      .each((row: any) => {
+        const data = row;
+
+        const reqBody = String(data.reqBody);
+        const expectStatus = Number(data.expectStatus);
+
+        cy.request({
+          method: 'POST',
+          url: `${Config.BASE_API_URL}/auth/login`,
+          failOnStatusCode: false,
+          body: JSON.parse(reqBody),
+        }).then(res => {
+          expect(res.status).equal(expectStatus);
+        });
+      });
   });
 });
