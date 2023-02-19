@@ -19,7 +19,31 @@ describe('Login', () => {
 
     cy.readFile('cypress/fixtures/auth/login/success-case-data.csv')
       .then(neatCsv)
-      // .then(console.table)
+      .each((row: any) => {
+        const data = row;
+
+        const reqBody = String(data.reqBody);
+        const expectStatus = Number(data.expectStatus);
+
+        cy.request({
+          method: 'POST',
+          url: `${Config.BASE_API_URL}/auth/login`,
+          failOnStatusCode: false,
+          body: JSON.parse(reqBody),
+        }).then(res => {
+          expect(res.status).equal(expectStatus);
+        });
+      });
+  });
+
+  it('Login_Fail_InvalidParameterOrInvalidUsernameOrPassword', () => {
+    // clear database
+    cy.dbClear().then(res => {
+      expect(res.status).equal(200);
+    });
+
+    cy.readFile('cypress/fixtures/auth/login/fail-case-data.csv')
+      .then(neatCsv)
       .each((row: any) => {
         const data = row;
 

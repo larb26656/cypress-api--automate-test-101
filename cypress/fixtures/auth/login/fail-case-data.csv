@@ -1,0 +1,12 @@
+reqBody,expectStatus,description
+{},400,
+"{
+  ""username"": ""e""
+}",400,
+"{
+  ""password"": ""password""
+}",400,
+"{
+  ""username"": ""admin"",
+  ""password"": ""password""
+}",401,no user in db
